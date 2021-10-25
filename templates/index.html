@@ -1,0 +1,28 @@
+{% extends "_base.html" %} 
+<!--  -->
+{% block head %} 
+<script src="{{url_for('static', filename='index.js')}}"></script>
+{% endblock %} 
+<!--  -->
+{% block body %} 
+
+<div class="input-group mb-2">
+    <label for="material-type" class="form-label">Type</label>
+    <select class="form-select" id="material-type" name="material-type">
+        {% for type in ['Agnostic','Armadylean','Bandosian','Dragonkin','Saradominist','Zamorakian','Zarosian'] %} 
+            <option value="{{type}}">{{type}}</option>
+        {% endfor %} 
+    </select>
+</div>
+
+<div class="input-group mb-3">
+    <label for="materials" class="form-label">Materials</label>
+    <select class="form-select" id="materials" name="materials">
+        <!-- automagically fill this with javascript -->
+    </select>
+</div>
+
+<br>
+<br>
+{% include "_material.html" %} 
+{% endblock %} 

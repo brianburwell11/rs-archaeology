@@ -1,0 +1,43 @@
+{% extends "_base.html" %} 
+<!--  -->
+{% block head %} 
+<title>Add to Database</title>
+<script src="{{ url_for('admin_blueprint.static',filename='addArtefact.js') }}"></script>
+{% endblock %} 
+<!--  -->
+{% block body %} 
+<h1>Add Artefact to Database</h1>
+
+<form>
+    <div class="mb-3">
+        <label for="artefact-id" class="form-label">ID (repaired)</label>
+        <input type="number" min=0 step=1 id="artefact-id" name="artefact-id">
+    </div>
+
+    <div class="mb-3">
+        <label for="artefact-name" class="form-label">Name</label>
+        <input type="text" id="artefact-name" name="artefact-name">
+    </div>
+
+    <div class="mb-3">
+        <label for="artefact-alignment" class="form-label">Alignment</label>
+        <select class="form-select" id="artefact-alignment" name="artefact-alignment">
+            {% for type in ['Agnostic','Armadylean','Bandosian','Dragonkin','Saradominist','Zamorakian','Zarosian'] %} 
+                <option value="{{type}}">{{type}}</option>
+            {% endfor %} 
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="level-required" class="form-label">Level Required</label>
+        <input type="number" min=1 max=120 step=1 id="level-required" name="level-required">
+    </div>
+
+    <div class="mb-3">
+        <label for="xp-gained" class="form-label">XP from restoring</label>
+        <input type="number" min=1 step=0.1 id="xp-gained" name="xp-gained">
+    </div>
+
+    <button type="button" id="submit">Submit</button>
+</form>
+{% endblock %} 

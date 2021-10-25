@@ -1,0 +1,51 @@
+{% extends "_base.html" %} 
+<!--  -->
+{% block head %} 
+<title>Artefact-Materials</title>
+<script src="{{ url_for('admin_blueprint.static',filename='addArtefactMaterials.js') }}"></script>
+{% endblock %} 
+<!--  -->
+{% block body %} 
+<h1>Add Artefact Materials</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <label for="artefact-select" class="form-label">Artefact</label>
+            <select class="form-select" id="artefact-select">
+                <!-- automagically add options -->
+            </select>
+    
+            <img id="artefact-img">
+        </div>
+    
+        <div class="col">
+            {% for num in [1,2,3,4,5] %}
+                <div class="row">
+                    <div class="col-md">
+                        <select class="form-select" id="material-select-{{num}}">
+                            <option value="-1">- select material -</option>
+                            <!-- automagically add options -->
+                        </select>
+                    </div>
+    
+                    <div class="col-sm">
+                        <input type="number" min=1 step=1 id="material-select-{{num}}-amount">
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+</div>
+
+<button type="button" id="submit">Submit</button>
+
+<p id="response"></p>
+
+<!-- <a id="wiki" class="btn" target="_blank">Wiki</a>
+<div class="align-center">
+    <iframe id="rs-wiki" width="90%" height="1000" src="https://www.runehq.com/item/venator-dagger">
+    </iframe>
+</div> -->
+
+{% endblock %} 
