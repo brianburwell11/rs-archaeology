@@ -15,12 +15,25 @@ class ArtefactList(Resource):
 
     def get(self):
         alignment = request.args.get('alignment', None)
+        sort_by = request.args.get('sort', 'level').lower()
+        if sort_by not in ['level', 'name', 'id']:
+            sort_by = 'level'
+
         try: 
             session = Session()
+            artefacts = session.query(Artefact)
+
+            if sort_by == 'level':
+                artefacts = artefacts.order_by(Artefact.level_required).order_by(Artefact.name)
+            elif sort_by == 'name':
+                artefacts = artefacts.order_by(Artefact.name)
+            elif sort_by == 'id':
+                artefacts = artefacts.order_by(Artefact.id)
+
             if alignment:
-                artefacts = session.query(Artefact).filter_by(alignment=alignment).order_by(Artefact.level_required).order_by(Artefact.name).all()
-            else:
-                artefacts = session.query(Artefact).order_by(Artefact.level_required).order_by(Artefact.name).all()
+                artefacts = artefacts.filter_by(alignment=alignment)
+            
+            artefacts = artefacts.all()
             session.close()
         except Exception as e:
             session.close()
@@ -29,10 +42,10 @@ class ArtefactList(Resource):
         return {
             'count': len(artefacts),
             'artefacts': [{'id':a.id, 'name':a.name} for a in artefacts]
-        }, 200
+        }
 
 
-class ArtefactApi(Resource):
+class ArtefactApiResource(Resource):
 
     def get(self, id):
         try: 
@@ -64,10 +77,10 @@ class ArtefactApi(Resource):
             'imgDamaged': get_image_url(artefact.id - 1),
             'materials': materials
             # 'materials': {m.id:session.query(Base.metadata.tables['material_artefact']).filter_by(artefact_id=id).filter_by(material_id=m.id).first().amount for m in artefact.materials}
-            }, 200
+            }
 
 
 __all__ = [
     'ArtefactList',
-    'ArtefactApi'
+    'ArtefactApiResource'
 ]

@@ -31,7 +31,7 @@ class MaterialList(Resource):
         }, 200
 
 
-class MaterialApi(Resource):
+class MaterialApiResource(Resource):
     """A material used to restore Artefacts."""
 
     def get(self, id):
@@ -61,5 +61,5 @@ class MaterialApi(Resource):
 
 __all__ = [
     'MaterialList',
-    'MaterialApi'
+    'MaterialApiResource'
 ]
