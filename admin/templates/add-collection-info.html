@@ -1,0 +1,65 @@
+{% extends "_base.html" %} 
+<!--  -->
+{% block head %} 
+<title>Add Collection Info</title>
+<script src="{{ url_for('admin_blueprint.static',filename='addCollectionInfo.js') }}"></script>
+{% endblock %} 
+<!--  -->
+{% block body %} 
+<h1>Add Collection Information</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div class="mb-3">
+                <label for="collector-select" class="form-label">Collector</label>
+                <select class="form-select" id="collector-select" name="collector-select">
+                    <!-- automagically fill this -->
+                </select>
+            
+                <img id="collector-img">
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="mb-3">
+                <label for="collection-select" class="form-label">Collection</label>
+                <select class="form-select" id="collection-select" name="collection-select">
+                    <!-- automagically fill this -->
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md">
+            {% for num in [1,2,3,4,5,6,7,8,9,10] %}
+                <div class="row">
+                    <div class="col-sm">
+                        <select class="form-select" id="artefact-select-{{num}}">
+                            <option value="-1">- select artefact -</option>
+                            <!-- automagically add options -->
+                        </select>
+                    </div>
+
+                    <div class="col-sm">
+                        <select class="form-select" id="reward-select-{{num}}">
+                            <!-- automagically add options -->
+                        </select>
+                    </div>
+    
+                    <div class="col-sm">
+                        <input type="number" min=1 step=1 id="reward-select-{{num}}-amount">
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+</div>    
+
+
+<button type="button" id="submit">Submit</button>
+
+<p id="response"></p>
+
+{% endblock %} 

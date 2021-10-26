@@ -1,3 +1,4 @@
+from json import loads
 from sys import path
 
 from flask import Blueprint, render_template, request
@@ -7,7 +8,7 @@ path.insert(0, '..')
 from auth import auth
 from db import *
 from db import engine
-from db.models import material_artefact as m_a
+from db.models import material_artefact as m_a, artefact_collection_reward as a_c_r
 from create_db import ARTEFACTS
 
 
@@ -67,6 +68,7 @@ def add_artefact():
 
     return render_template('add-artefact.html')
 
+
 @admin_blueprint.route('/add/artefact-materials', methods=['GET', 'POST'])
 def add_artefact_material():
     if request.method == 'POST':
@@ -112,9 +114,6 @@ def add_artefact_material():
                     'error': str(e)
                     }
 
-            session.commit()        
-            session.close()
-
             return {
                 'success': True,
                 'msg': f'Succesfully updated {artefact_name}'
@@ -126,3 +125,58 @@ def add_artefact_material():
         }, 400
 
     return render_template('add-artefact-materials.html')
+
+
+@admin_blueprint.route('/add/collection-info', methods=['GET', 'POST'])
+def add_collection_info():
+    if request.method == 'POST':
+        r = request.form
+        artefact_rewards = loads(r.get('artefactRewards', '[]'))
+
+        try:
+            for artefact_reward in artefact_rewards:
+                session = Session()
+
+                collection = session.query(Collection).filter_by(id=r['collectionId']).first()
+                if collection is None:
+                    raise Exception(f'No Collection with id={r["collectionId"]} found')
+                collection_name = collection.name
+
+                artefact = session.query(Artefact).filter_by(id=artefact_reward['artefactId']).first()
+                if artefact is None:
+                    raise Exception(f'No Artefact with id={artefact_reward["artefactId"]} found')
+                    
+                reward = session.query(Reward).filter_by(id=artefact_reward['rewardId']).first()
+                if reward is None:
+                    raise Exception(f'No Reward with id={artefact_reward["rewardId"]} found')
+                    
+                if artefact not in collection.artefacts:
+                    collection.artefacts.append(artefact)
+                
+                session.commit()
+
+                sql_statement = a_c_r.update() \
+                                    .where(and_(
+                                        a_c_r.c.artefact_id==artefact.id,
+                                        a_c_r.c.collection_id==collection.id
+                                        )) \
+                                    .values(reward_id=reward.id, amount=artefact_reward['rewardAmt'])
+                session.close() #have to close this session because
+
+                engine.execute(sql_statement) #SQLite is too wimpy to have two concurrent processes
+
+        except Exception as e:
+                session.close()
+                print(e)
+                return {
+                    'success': False,
+                    'error': str(e)
+                    }
+        
+        return {
+            'success': True,
+            'msg': f'Succesfully updated {collection_name}'
+        }, 200
+
+
+    return render_template('add-collection-info.html')
