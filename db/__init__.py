@@ -18,8 +18,6 @@ Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 
-from .print_db import print_db
-
 
 __all__ = [
     'DB_NAME',
@@ -32,6 +30,5 @@ __all__ = [
     'Collector',
     'Collection',
     'Reward',
-    'Mystery',
-    'print_db'
+    'Mystery'
 ]

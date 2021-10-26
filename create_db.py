@@ -67,7 +67,7 @@ if False:
     [collections.append(Collection(name=name, collector_id=collector_ids.get('Art Critic Jacques'))) for name in names]
 
     names = ['Blingy Fings', 'Smoky Fings', 'Hitty Fings', 'Showy Fings']
-    [collections.append(Collection(id=name, collector_id=collector_ids.get('Chief Tess'))) for name in names]
+    [collections.append(Collection(name=name, collector_id=collector_ids.get('Chief Tess'))) for name in names]
 
     for collector,name in [ ('General Bentnoze', 'Red Rum Relics'),
                             ('General Wartface', 'Green Gobbo Goodies'),
@@ -80,8 +80,8 @@ if False:
                             ('Sharrigan', 'Dragonkin'),
                             ('Sir Atcha', 'Saradominist'),
                             ('Soran, Emissary of Zaros', 'Zarosian')]:
-        [collections.append(Collection(id=f'{name} {num}',collector_id=collector_ids.get(collector))) for num in ['I','II','III','IV']]
-        [collections.append(Collection(id=f'Museum - {name} {num}',collector_id=collector_ids.get('Velucia'))) for num in ['I','II','III','IV']]
+        [collections.append(Collection(name=f'{name} {num}',collector_id=collector_ids.get(collector))) for num in ['I','II','III','IV']]
+        [collections.append(Collection(name=f'Museum - {name} {num}',collector_id=collector_ids.get('Velucia'))) for num in ['I','II','III','IV']]
         
     names = ['Wise Am the Music Man', 'Hat Problem', 'Hat Hoarder', 'Magic Man', 'Knowledge is Power']
     [collections.append(Collection(name=name, collector_id=collector_ids.get('Wise Old Man'))) for name in names]
@@ -349,7 +349,6 @@ if True:
 
 if __name__ == '__main__':
     session = Session()
-    # session.add(Material(id=49496, name='Cadmium red', alignment='Zamorakian'))
     # session.add_all(materials)
     # session.add_all(collectors)
     # session.add_all(collections)
