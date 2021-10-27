@@ -27,7 +27,7 @@ function loadCollectionOptions(collectorId){
 
 function loadArtefactOptions(){
     $.get({
-        url: "/api/artefacts",
+        url: "/api/artefacts?sort=name",
         success: function(data){
             for(let a of data.artefacts){
                 $("[id^=artefact-select-]").append(new Option(a.name, a.id));
@@ -43,6 +43,8 @@ function loadRewardOptions(){
         success: function(data){
             for(let r of data.rewards){
                 $("select[id^=reward-select-]").append(new Option(r.name, r.id));
+                $("select[id^=completion-select-]").append(new Option(r.name, r.id));
+                $("#completion-select-1").val(49430).change(); //set to "Chronotes"
             }
         },
         error: function(e){console.log(e);},
@@ -89,17 +91,34 @@ $(function(){
         formData.append("collectionId", $("#collection-select").val());
 
         var artefactRewards = new Array();
-        $("[id^=artefact-select]").each(function(idx){
-            if($(this).val()>0){
+        $("select[id^=artefact-select]").each(function(idx){
+            if($(this).find(":selected").val()>0){
                 let artefactReward = {};
-                artefactReward.artefactId = $(this).val();
+                artefactReward.artefactId = $(this).find(":selected").val();
                 artefactReward.rewardId = $("#reward-"+this.id.slice(9)).val();
                 artefactReward.rewardAmt = $("#reward-"+this.id.slice(9)+"-amount").val();
                 
-                artefactRewards.push(artefactReward);
+                if(artefactReward.rewardAmt>0){
+                    artefactRewards.push(artefactReward);
+                }
             }
         });
         formData.append("artefactRewards", JSON.stringify(artefactRewards));
+        
+        var collectionRewards = new Array();
+        $("select[id^=completion-select]").each(function(idx){
+            if($(this).find(":selected").val()>0){
+                let collectionReward = {};
+                collectionReward.rewardId = $(this).find(":selected").val();
+                collectionReward.rewardAmt = $("#completion-"+this.id.slice(11)+"-amount").val();
+                
+                if(collectionReward.rewardAmt>0){
+                    collectionRewards.push(collectionReward);
+                }
+            }
+        });
+        formData.append("collectionRewards", JSON.stringify(collectionRewards));
+        console.log(collectionRewards);
 
         $.post({
             url: '/admin/add/collection-info',
@@ -109,9 +128,9 @@ $(function(){
             success: function(data){
                 if(data.success){
                     $("#response").text(data.msg);
-                    $("select[id^=artefact-select-]").val(-1).change();
-                    $("select[id^reward-select-]").val(-1).change();
-                    $("input[id^=reward-select-]").val().change();
+                    $("select[id^=artefact-select]").val(-1).change();
+                    $("select[id^=completion-select]").val(-1).change();
+                    $("#completion-select-1").val(49430).change(); //set to "Chronotes"
                 }else{
                     console.log(data.error);
                     $("#response").text(data.error);

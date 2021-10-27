@@ -8,7 +8,7 @@ path.insert(0, '..')
 from auth import auth
 from db import *
 from db import engine
-from db.models import material_artefact as m_a, artefact_collection_reward as a_c_r
+from db.models import material_artefact as m_a, artefact_collection_reward as a_c_r, reward_collection as r_c
 from create_db import ARTEFACTS
 
 
@@ -132,6 +132,7 @@ def add_collection_info():
     if request.method == 'POST':
         r = request.form
         artefact_rewards = loads(r.get('artefactRewards', '[]'))
+        collection_rewards = loads(r.get('collectionRewards', '[]'))
 
         try:
             for artefact_reward in artefact_rewards:
@@ -161,6 +162,34 @@ def add_collection_info():
                                         a_c_r.c.collection_id==collection.id
                                         )) \
                                     .values(reward_id=reward.id, amount=artefact_reward['rewardAmt'])
+                                    
+                session.close() #have to close this session because
+
+                engine.execute(sql_statement) #SQLite is too wimpy to have two concurrent processes
+                
+            for collection_reward in collection_rewards:
+                session = Session()
+
+                collection = session.query(Collection).filter_by(id=r['collectionId']).first()
+                if collection is None:
+                    raise Exception(f'No Collection with id={r["collectionId"]} found')
+                collection_name = collection.name
+
+                reward = session.query(Reward).filter_by(id=collection_reward['rewardId']).first()
+                if reward is None:
+                    raise Exception(f'No Reward with id={collection_reward["rewardId"]} found')
+                
+                if reward not in collection.rewards:
+                    collection.rewards.append(reward)
+                    session.commit()
+
+                sql_statement = r_c.insert() \
+                                    .values(
+                                        collection_id=collection.id,
+                                        reward_id=reward.id,
+                                        amount=collection_reward['rewardAmt']
+                                    )
+
                 session.close() #have to close this session because
 
                 engine.execute(sql_statement) #SQLite is too wimpy to have two concurrent processes

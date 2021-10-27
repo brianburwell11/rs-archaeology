@@ -55,6 +55,30 @@
             {% endfor %} 
         </div>
     </div>
+
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-sm">
+            <p>Completion</p>
+        </div>
+
+        {% for num in [1,2,3] %} 
+            <div class="row">
+                <div class="col-sm">
+                    <select class="form-select" id="completion-select-{{num}}">
+                        <option value="-1">- select a reward -</option>
+                        <!-- automagically add options -->
+                    </select>
+                </div>
+    
+                <div class="col-sm">
+                    <input type="number" min=1 step=1 id="completion-select-{{num}}-amount">
+                </div>
+            </div>
+        {% endfor %} 
+    </div>
 </div>    
 
 
