@@ -1,20 +1,19 @@
 from flask import Flask, render_template
 
 from admin import admin_blueprint
-from api import api_blueprint
+from api import *
+from db.db import db_blueprint
+
 
 app = Flask(__name__)
 
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
 app.register_blueprint(api_blueprint, url_prefix='/api')
+app.register_blueprint(db_blueprint, url_prefix='/db')
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/view')
-def view_artefacts():
-    return render_template('view-artefacts.html')
 
 @app.errorhandler(404)
 def error_404(e):
