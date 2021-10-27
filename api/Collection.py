@@ -59,6 +59,14 @@ class CollectionApiResource(Resource):
             if a.level_required > max_level:
                 max_level = a.level_required
 
+        rewards = dict()
+        for r in collection.rewards:
+            rewards[r.id] = {
+                'name': r.name,
+                'amount': session.query(Base.metadata.tables['reward_collection']).filter_by(collection_id=id).filter_by(reward_id=r.id).first().amount,
+                'img': get_image_url(r.id)
+            }
+
         return {
             'id': id,
             'name': collection.name,
@@ -68,7 +76,7 @@ class CollectionApiResource(Resource):
             },
             'levelRequired': max_level,
             'artefacts': artefacts,
-            'rewards': None
+            'rewards': rewards
             }
 
 
