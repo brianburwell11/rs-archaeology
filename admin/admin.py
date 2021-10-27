@@ -8,7 +8,10 @@ path.insert(0, '..')
 from auth import auth
 from db import *
 from db import engine
-from db.models import material_artefact as m_a, artefact_collection_reward as a_c_r, reward_collection as r_c
+from db.models import ( material_artefact as m_a,
+                        artefact_collection_reward as a_c_r,
+                        reward_collection as r_c
+                      )
 from create_db import ARTEFACTS
 
 
