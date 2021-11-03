@@ -1,6 +1,6 @@
 from sys import path
 
-from flask_restful import Resource
+from flask_restx import Resource
 from sqlalchemy.orm import joinedload
 
 from .third_party import get_NPC_image_url

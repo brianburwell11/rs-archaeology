@@ -1,7 +1,7 @@
 from sys import path
 
 from flask import request
-from flask_restful import Resource
+from flask_restx import Resource
 from sqlalchemy.orm import joinedload
 
 from .third_party import get_image_url
@@ -12,6 +12,7 @@ from db import Base
 
 
 class ArtefactList(Resource):
+    """A list of items that can be restored using Materials."""
 
     def get(self):
         alignment = request.args.get('alignment', None)
@@ -46,7 +47,8 @@ class ArtefactList(Resource):
 
 
 class ArtefactApiResource(Resource):
-
+    """An item that can be restored using Materials."""
+    
     def get(self, id):
         try: 
             session = Session()

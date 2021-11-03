@@ -1,20 +1,13 @@
 from os.path import join, sep
 
 from flask import Flask, render_template, redirect
-from flask_swagger_ui import get_swaggerui_blueprint
 
 from admin import admin_blueprint
-from api import *
+from api import api_blueprint
 from db.db import db_blueprint
 
 
 app = Flask(__name__)
-
-app.register_blueprint(get_swaggerui_blueprint(
-                            '/api',
-                            join(sep, 'static', 'swaggerui.json'),
-                            config={'app_name':"RS Archaeology"}
-                        ))
 
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
 app.register_blueprint(api_blueprint, url_prefix='/api')

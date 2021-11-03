@@ -1,5 +1,7 @@
+from sys import path
+
 from flask import Blueprint
-from flask_restful import Api
+from flask_restx import Api
 
 from .Artefact import *
 from .Collection import *
@@ -8,8 +10,8 @@ from .Material import *
 from .Reward import *
 
 
-api_blueprint = Blueprint('api_blueprint', __name__)
-api = Api(api_blueprint)
+api_blueprint = Blueprint('api', __name__)
+api = Api(api_blueprint, version='1.1.0', title='RS Archaeology')
 
 api.add_resource(ArtefactList, '/artefacts')
 api.add_resource(ArtefactApiResource, '/artefacts/<int:id>')

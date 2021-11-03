@@ -1,6 +1,6 @@
 from sys import path
 
-from flask_restful import Resource
+from flask_restx import Resource
 
 from .third_party import get_ge_value, get_image_url
 path.insert(0, '..')
