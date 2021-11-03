@@ -1,0 +1,543 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "RS Archaeology",
+        "description": "Interface for accessing a database of Archaeology objects in Runescape 3",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/materials": {
+            "get": {
+                "summary": "Returns a list of materials",
+                "parameters": [
+                    {
+                        "name": "alignment",
+                        "in": "query",
+                        "description": "restrict returned materials to only those of a given alignment",
+                        "schema": {
+                            "type": "string",
+                            "enum": ["Agnostic", "Armadylean", "Bandosian", "Dragonkin", "Saradominist", "Zamorakian", "Zarosian"]                            
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "materials": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "minimum": 0
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/materials/{materialId}": {
+            "get": {
+                "summary": "Find a Material by ID",
+                "parameters": [
+                    {
+                        "name": "materialId",
+                        "required": true,
+                        "in": "path",
+                        "description": "the in-game ID of the Material, which is also its ID in the database",
+                        "schema": {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "alignment": {
+                                            "type": "string",
+                                            "enum": ["Agnostic", "Armadylean", "Bandosian", "Dragonkin", "Saradominist", "Zamorakian", "Zarosian"]
+                                        },
+                                        "img": {
+                                            "type": "string"
+                                        },
+                                        "price": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/artefacts": {
+            "get": {
+                "summary": "Returns a list of artefacts",
+                "parameters": [
+                    {
+                        "name": "alignment",
+                        "in": "query",
+                        "description": "restrict returned artefacts to only those of a given alignment",
+                        "schema": {
+                            "type": "string",
+                            "enum": ["Agnostic", "Armadylean", "Bandosian", "Dragonkin", "Saradominist", "Zamorakian", "Zarosian"]                            
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "sort the returned list by a given property",
+                        "schema": {
+                            "type": "string",
+                            "enum": ["id", "level", "name"],
+                            "default": "level"                     
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "artefacts": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "minimum": 0
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/artefacts/{artefactId}": {
+            "get": {
+                "summary": "Find an Artefact by ID",
+                "parameters": [
+                    {
+                        "name": "artefactId",
+                        "required": true,
+                        "in": "path",
+                        "description": "the in-game ID of the (damaged) Artefact, which is also its ID in the database",
+                        "schema": {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "alignment": {
+                                            "type": "string",
+                                            "enum": ["Agnostic", "Armadylean", "Bandosian", "Dragonkin", "Saradominist", "Zamorakian", "Zarosian"]
+                                        },
+                                        "levelRequired": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 120
+                                        },
+                                        "xp": {
+                                            "type": "number"
+                                        },
+                                        "img": {
+                                            "type": "string"
+                                        },
+                                        "imgDamaged": {
+                                            "type": "string"
+                                        },
+                                        "materials": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "amount": {
+                                                        "type": "integer",
+                                                        "minimum": 1
+                                                    },
+                                                    "img": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/collectors": {
+            "get": {
+                "summary": "Returns a list of Collectors",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "collectors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "minimum": 0
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/collectors/{collectorId}": {
+            "get": {
+                "summary": "Find a collector by ID",
+                "parameters": [
+                    {
+                        "name": "collectorId",
+                        "required": true,
+                        "in": "path",
+                        "description": "the in-game ID of the collector, which is also its ID in the database",
+                        "schema": {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "img": {
+                                            "type": "string"
+                                        },
+                                        "collections": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/collections": {
+            "get": {
+                "summary": "Returns a list of collections",
+                "parameters": [
+                    {
+                        "name": "collectorId",
+                        "in": "query",
+                        "description": "restrict returned collections to only those by a Collector with the specified ID",
+                        "schema": {
+                            "type": "integer" 
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "collections": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "minimum": 0
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/collections/{collectionId}": {
+            "get": {
+                "summary": "Find a collection by ID",
+                "parameters": [
+                    {
+                        "name": "collectionId",
+                        "required": true,
+                        "in": "path",
+                        "description": "the ID of the collection in the database",
+                        "schema": {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "minimum": 1
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "collector": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "levelRequired": {
+                                            "type": "integer",
+                                            "minimum": 1,
+                                            "maximum": 120
+                                        },
+                                        "artefacts": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "img": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "rewards": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "amount": {
+                                                        "type": "integer",
+                                                        "minimum": 0
+                                                    },
+                                                    "img": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/rewards": {
+            "get": {
+                "summary": "Returns a list of all of the items used as Rewards for contributing to Collections",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "rewards": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "minimum": 0
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/rewards/{rewardId}": {
+            "get": {
+                "summary": "Find a reward by ID",
+                "parameters": [
+                    {
+                        "name": "rewardId",
+                        "required": true,
+                        "in": "path",
+                        "description": "the in-game ID of the reward, which is also its ID in the database",
+                        "schema": {
+                            "type": "integer",
+                            "min": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "img": {
+                                            "type": "string"
+                                        },
+                                        "price": {
+                                            "type": "integer",
+                                            "nullable": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
