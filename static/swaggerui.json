@@ -51,6 +51,19 @@
                                             }
                                         }
                                     }
+                                },
+                                "example": {
+                                    "count": 2,
+                                    "materials": [
+                                        {
+                                            "id": 49445,
+                                            "name": "Purpleheart wood"
+                                        },
+                                        {
+                                            "id": 49444,
+                                            "name": "Imperial iron"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -98,6 +111,13 @@
                                             "type": "integer"
                                         }
                                     }
+                                },
+                                "example": {
+                                    "id": 49466,
+                                    "name": "Aetherium alloy",
+                                    "alignment": "Armadylean",
+                                    "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49466",
+                                    "price": 3123
                                 }
                             }
                         }
@@ -156,6 +176,23 @@
                                             }
                                         }
                                     }
+                                },
+                                "example": {
+                                    "count": 3,
+                                    "artefacts": [
+                                        {
+                                            "id": 49742,
+                                            "name": "Centurion's dress sword"
+                                        },
+                                        {
+                                            "id": 49922,
+                                            "name": "Venator dagger"
+                                        },
+                                        {
+                                            "id": 49924,
+                                            "name": "Venator light crossbow"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -211,8 +248,8 @@
                                             "type": "string"
                                         },
                                         "materials": {
-                                            "type": "array",
-                                            "items": {
+                                            "type": "object",
+                                            "additionalproperties": {
                                                 "type": "object",
                                                 "properties": {
                                                     "name": {
@@ -227,6 +264,27 @@
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "id": 49742,
+                                    "name": "Centurion's dress sword",
+                                    "alignment": "Agnostic",
+                                    "levelRequired": 1,
+                                    "xp": 250.0,
+                                    "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49742",
+                                    "imgDamaged": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49741",
+                                    "materials": {
+                                        "49444": {
+                                            "name": "Imperial iron",
+                                            "amount": 5,
+                                            "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49444"
+                                        },
+                                        "49445": {
+                                            "name": "Purpleheart wood",
+                                            "amount": 5,
+                                            "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49445"
                                         }
                                     }
                                 }
@@ -266,6 +324,23 @@
                                             }
                                         }
                                     }
+                                },
+                                "example": {
+                                    "count": 3,
+                                    "collectors": [
+                                        {
+                                            "id": 5930,
+                                            "name": "Art Critic Jacques"
+                                        },
+                                        {
+                                            "id": 7088,
+                                            "name": "Chief Tess"
+                                        },
+                                        {
+                                            "id": 26924,
+                                            "name": "Velucia"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -317,6 +392,22 @@
                                             }
                                         }
                                     }
+                                },
+                                "example": {
+                                    "id": 5930,
+                                    "name": "Art Critic Jacques",
+                                    "img": "https://runescape.wiki/images/Art_Critic_Jacques_chathead.png",
+                                    "collections": {
+                                        "1": {
+                                            "name": "Anarchic Abstraction"
+                                        },
+                                        "2": {
+                                            "name": "Radiant Renaissance"
+                                        },
+                                        "3": {
+                                            "name": "Imperial Impressionism"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -364,6 +455,23 @@
                                             }
                                         }
                                     }
+                                },
+                                "example": {
+                                    "count": 3,
+                                    "collections": [
+                                        {
+                                            "id": 1,
+                                            "name": "Anarchic Abstraction"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "name": "Radiant Renaissance"
+                                        },
+                                        {
+                                            "id": 3,
+                                            "name": "Imperial Impressionism"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -451,6 +559,36 @@
                                             }
                                         }
                                     }
+                                },
+                                "example": {
+                                    "id": 1,
+                                    "name": "Anarchic Abstraction",
+                                    "collector": {
+                                        "id": 5930,
+                                        "name": "Art Critic Jacques"
+                                    },
+                                    "levelRequired": 89,
+                                    "artefacts": {
+                                        "49832": {
+                                            "name": "'Disorder' painting",
+                                            "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49832"
+                                        },
+                                        "49834": {
+                                            "name": "'The Lake of Fire' painting",
+                                            "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49834"
+                                        },
+                                        "49836": {
+                                            "name": "'Pandemonium' tapestry",
+                                            "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49836"
+                                        }
+                                    },
+                                    "rewards": {
+                                        "49430": {
+                                            "name": "Chronotes",
+                                            "amount": 1574,
+                                            "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49430"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -488,6 +626,19 @@
                                             }
                                         }
                                     }
+                                },
+                                "example": {
+                                    "count": 2,
+                                    "rewards": [
+                                        {
+                                            "id": 49430,
+                                            "name": "Chronotes"
+                                        },
+                                        {
+                                            "id": 49956,
+                                            "name": "Tetracompass piece"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -532,6 +683,12 @@
                                             "nullable": true
                                         }
                                     }
+                                },
+                                "example": {
+                                    "id": 49430,
+                                    "name": "Chronotes",
+                                    "img": "https://secure.runescape.com/m=itemdb_rs/obj_big.gif?id=49430",
+                                    "price": 179
                                 }
                             }
                         }
