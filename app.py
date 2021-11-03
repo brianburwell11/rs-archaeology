@@ -1,6 +1,6 @@
 from os.path import join, sep
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from flask_swagger_ui import get_swaggerui_blueprint
 
 from admin import admin_blueprint
@@ -12,7 +12,8 @@ app = Flask(__name__)
 
 app.register_blueprint(get_swaggerui_blueprint(
                             '/api',
-                            join(sep, 'static', 'swaggerui.json')
+                            join(sep, 'static', 'swaggerui.json'),
+                            config={'app_name':"RS Archaeology"}
                         ))
 
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
@@ -21,7 +22,8 @@ app.register_blueprint(db_blueprint, url_prefix='/db')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect('/api')
+    # return render_template('index.html')
 
 @app.errorhandler(404)
 def error_404(e):
