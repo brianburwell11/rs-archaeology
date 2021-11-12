@@ -4,6 +4,7 @@ from flask import request
 from flask_restx import Resource
 from sqlalchemy.orm import joinedload
 
+from . import api
 from .third_party import get_image_url
 path.insert(0, '..')
 from auth import auth
@@ -11,6 +12,7 @@ from db import *
 from db import Base
 
 
+@api.route('/collections')
 class CollectionList(Resource):
     def get(self):
         collector_id = request.args.get('collectorId', None)
@@ -25,12 +27,10 @@ class CollectionList(Resource):
             session.close()
             return {'error':str(e)}, 500
 
-        return {
-            'count': len(collections),
-            'collections': [{'id':c.id, 'name':c.name} for c in collections]
-        }
+        return [{'id':c.id, 'name':c.name} for c in collections]
 
 
+@api.route('/collections/<int:id>')
 class CollectionApiResource(Resource):
     def get(self, id):
         try: 
@@ -48,24 +48,24 @@ class CollectionApiResource(Resource):
             return {'error':str(e)}, 500
 
 
-        artefacts = dict()
+        artefacts = []
         max_level = 1
         for a in collection.artefacts:
-            artefacts[a.id] = {
-                'name': a.name,
-                'img': get_image_url(a.id)
-            }
+            artefacts.append({
+                'id': a.id,
+                'name': a.name
+            })
 
             if a.level_required > max_level:
                 max_level = a.level_required
 
-        rewards = dict()
+        rewards = []
         for r in collection.rewards:
-            rewards[r.id] = {
+            rewards.append({
+                'id': r.id,
                 'name': r.name,
-                'amount': session.query(Base.metadata.tables['reward_collection']).filter_by(collection_id=id).filter_by(reward_id=r.id).first().amount,
-                'img': get_image_url(r.id)
-            }
+                'amount': session.query(Base.metadata.tables['reward_collection']).filter_by(collection_id=id).filter_by(reward_id=r.id).first().amount
+            })
 
         return {
             'id': id,

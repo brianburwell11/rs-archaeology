@@ -1,13 +1,14 @@
 from sys import path
 
-from flask_restx import Resource
+from flask_restx import fields, Resource
 
+from . import api
 from .third_party import get_ge_value, get_image_url
 path.insert(0, '..')
-from auth import auth
 from db import *
 
 
+@api.route('/rewards')
 class RewardList(Resource):
     """A list of all of the items used as Rewards for contributing to Collections"""
 
@@ -20,15 +21,22 @@ class RewardList(Resource):
             session.close()
             return {'error':str(e)}, 500
 
-        return {
-            'count': len(rewards),
-            'rewards': [{'id':r.id, 'name':r.name} for r in rewards]
-        }, 200
+        return [{'id':r.id, 'name':r.name} for r in rewards]
 
 
+reward = api.model('Reward', {
+                        'id': fields.Integer,
+                        'name': fields.String,
+                        'img': fields.Url,
+                        'price': fields.Integer
+                    })
+
+@api.route('/rewards/<int:id>')
+@api.doc(params={'id': 'the in-game ID for the item, which is also its ID in the database'})
 class RewardApiResource(Resource):
     """A reward for contributing to a collection."""
 
+    @api.response(200, 'Success', reward)
     def get(self, id):
         try: 
             session = Session()

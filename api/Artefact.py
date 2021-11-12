@@ -4,6 +4,7 @@ from flask import request
 from flask_restx import Resource
 from sqlalchemy.orm import joinedload
 
+from . import api
 from .third_party import get_image_url
 path.insert(0, '..')
 from auth import auth
@@ -11,6 +12,7 @@ from db import *
 from db import Base
 
 
+@api.route('/artefacts')
 class ArtefactList(Resource):
     """A list of items that can be restored using Materials."""
 
@@ -40,12 +42,10 @@ class ArtefactList(Resource):
             session.close()
             return {'error':str(e)}, 500
 
-        return {
-            'count': len(artefacts),
-            'artefacts': [{'id':a.id, 'name':a.name} for a in artefacts]
-        }
+        return [{'id':a.id, 'name':a.name} for a in artefacts]
 
 
+@api.route('/artefacts/<int:id>')
 class ArtefactApiResource(Resource):
     """An item that can be restored using Materials."""
     
@@ -61,13 +61,13 @@ class ArtefactApiResource(Resource):
         if artefact is None:
             return {'error': f'No Artefact with id={id} exists.'}, 404
 
-        materials = dict()
+        materials = []
         for m in artefact.materials:
-            materials[m.id] = {
+            materials.append({
+                'id': m.id,
                 'name': m.name,
-                'amount': session.query(Base.metadata.tables['material_artefact']).filter_by(artefact_id=id).filter_by(material_id=m.id).first().amount,
-                'img': get_image_url(m.id)
-            }
+                'amount': session.query(Base.metadata.tables['material_artefact']).filter_by(artefact_id=id).filter_by(material_id=m.id).first().amount
+            })
 
         return {
             'id': id,
@@ -78,7 +78,6 @@ class ArtefactApiResource(Resource):
             'img': get_image_url(id),
             'imgDamaged': get_image_url(artefact.id - 1),
             'materials': materials
-            # 'materials': {m.id:session.query(Base.metadata.tables['material_artefact']).filter_by(artefact_id=id).filter_by(material_id=m.id).first().amount for m in artefact.materials}
             }
 
 

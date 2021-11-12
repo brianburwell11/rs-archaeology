@@ -2,7 +2,7 @@ function loadArtefactOptions(){
     $.get({
         url: "/api/artefacts",
         success: function(data){
-            for(let a of data.artefacts){
+            for(let a of data){
                 $("#artefact-select").append(new Option(a.name, a.id));
             }
         },
@@ -16,7 +16,7 @@ function loadMaterialOptions(){
     $.get({
         url: "/api/materials",
         success: function(data){
-            for(let a of data.materials){
+            for(let a of data){
                 $("[id^=material-select]").append(new Option(a.name, a.id));
             }
         },

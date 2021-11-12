@@ -2,7 +2,7 @@ function loadCollectorOptions(){
     $.get({
         url: "/api/collectors",
         success: function(data){
-            for(let c of data.collectors){
+            for(let c of data){
                 $("#collector-select").append(new Option(c.name, c.id));
             }
             $("#collector-select").change();
@@ -16,7 +16,7 @@ function loadCollectionOptions(collectorId){
         url: "/api/collections?collectorId="+collectorId,
         success: function(data){
             $("#collection-select").find("option").remove();
-            for(let c of data.collections){
+            for(let c of data){
                 $("#collection-select").append(new Option(c.name, c.id));
             }
             $("#collection-select").change();
@@ -29,7 +29,7 @@ function loadArtefactOptions(){
     $.get({
         url: "/api/artefacts?sort=name",
         success: function(data){
-            for(let a of data.artefacts){
+            for(let a of data){
                 $("[id^=artefact-select-]").append(new Option(a.name, a.id));
             }
         },
@@ -41,7 +41,7 @@ function loadRewardOptions(){
     $.get({
         url: "/api/rewards",
         success: function(data){
-            for(let r of data.rewards){
+            for(let r of data){
                 $("select[id^=reward-select-]").append(new Option(r.name, r.id));
                 $("select[id^=completion-select-]").append(new Option(r.name, r.id));
                 $("#completion-select-1").val(49430).change(); //set to "Chronotes"
