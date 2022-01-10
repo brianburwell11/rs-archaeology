@@ -11,7 +11,7 @@ from api import api_blueprint, graphql_blueprint
 from db.db import db_blueprint
 
 app.register_blueprint(admin_blueprint, url_prefix='/admin')
-app.register_blueprint(api_blueprint, subdomain='api')
+app.register_blueprint(api_blueprint, url_prefix='/api')
 app.register_blueprint(graphql_blueprint, url_prefix='/graphql')
 app.register_blueprint(db_blueprint, url_prefix='/db')
 
