@@ -1,0 +1,48 @@
+schema {
+    query: Query
+}
+
+enum Alignment {
+    AGNOSTIC
+    ARMADYLEAN
+    BANDOSIAN
+    DRAGONKIN
+    SARADOMINIST
+    ZAMORAKIAN
+    ZAROSIAN
+}
+
+type Artefact {
+    id: Int!
+    name: String!
+    alignment: Alignment
+    levelRequired: Int!
+    xp: Float!
+    img: String!
+    imgDamaged: String
+    materials: [MaterialAmount!]!
+}
+
+type Material {
+    id: Int!
+    name: String!
+    alignment: Alignment
+    img: String!
+    price: Int
+}
+
+type MaterialAmount {
+    id: Int!
+    name: String!
+    alignment: Alignment
+    img: String!
+    price: Int
+    amount: Int!
+}
+
+type Query {
+    MaterialList(alignment: Alignment): [Material]!
+    Material(id: Int!): Material!
+    ArtefactList(alignment: Alignment): [Artefact]!
+    Artefact(id: Int!): Artefact!
+}

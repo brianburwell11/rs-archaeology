@@ -10,7 +10,7 @@ Base = declarative_base()
 
 from .models import *
 
-DB_NAME = 'rs_archaeology'
+DB_NAME = "rs_archaeology"
 DB_URL = f"sqlite:///{join(dirname(abspath(__file__)), f'{DB_NAME}.db')}"
 
 engine = create_engine(DB_URL)
@@ -20,15 +20,15 @@ Session = sessionmaker(bind=engine)
 
 
 __all__ = [
-    'DB_NAME',
-    'DB_URL',
-    'Session',
-    'TABLE_NAMES',
-    'TABLES',
-    'Material',
-    'Artefact',
-    'Collector',
-    'Collection',
-    'Reward',
-    'Mystery'
+    "DB_NAME",
+    "DB_URL",
+    "Session",
+    "TABLE_NAMES",
+    "TABLES",
+    "Material",
+    "Artefact",
+    "Collector",
+    "Collection",
+    "Reward",
+    "Mystery",
 ]

@@ -2,8 +2,8 @@ from flask import Blueprint
 from flask_restx import Api
 
 
-api_blueprint = Blueprint('api', __name__)
-api = Api(api_blueprint, version='2.0.0', title='RS Archaeology')
+api_blueprint = Blueprint("api", __name__)
+api = Api(api_blueprint, version="2.0.0", title="RS Archaeology")
 
 from .Artefact import *
 from .Collection import *
@@ -28,10 +28,14 @@ from .Reward import *
 
 
 __all__ = [
-    'api_blueprint'
-    'ArtefactApiResource', 'ArtefactList',
-    'CollectionApiResource', 'CollectionList',
-    'CollectorApiResource', 'CollectorList',
-    'MaterialApiResource', 'MaterialList',
-    'RewardApiResource', 'RewardList',
+    "api_blueprint" "ArtefactApiResource",
+    "ArtefactList",
+    "CollectionApiResource",
+    "CollectionList",
+    "CollectorApiResource",
+    "CollectorList",
+    "MaterialApiResource",
+    "MaterialList",
+    "RewardApiResource",
+    "RewardList",
 ]

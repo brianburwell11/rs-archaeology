@@ -2,90 +2,226 @@ from db import *
 
 # materials
 if False:
-    tutorial_materials = [(49444,'Imperial iron'), (49445,'Purpleheart wood')]
-    agnostic_materials = [(49460,'Third Age iron'), (49456,'Samite silk'), (49464,'White oak'), (49450,'Goldrune'), (49454,'Orthenglass'),
-                          (49462,'Vellum'), (49452,'Leather scraps'), (49446,'Animal furs'), (49448,'Fossilised bone'), (49458,'Soapstone')]
-    armadylean_materials = [(49472,'Stormguard steel'), (49474,'Wings of War'), (49468,'Armadylean yellow'), (49466,'Aetherium alloy'), (49470,'Quintessence')]
-    bandosian_materials = [(49476,'Malachite green'), (49478,'Mark of the Kyzaj'), (49480,'Vulcanised rubber'), (49482,'Warforged bronze'), (49484,"Yu'biusk clay")]
-    dragonkin_materials = [(50688,'Compass rose'), (50692,'Felt'), (50690,'Dragon metal'), (50686,'Carbon black'), (50694,'Orgone')]
-    saradominist_materials = [(49490,'Keramos'), (49494,'White marble'), (49486,'Cobalt blue'), (49488,'Everlight silvthril'), (49492,'Star of Saradomin')]
-    zamorakian_materials = [(49498,'Chaotic brimstone'), (49500,'Demonhide'), (49502,'Eye of Dagon'), (49504,'Hellfire metal'), (49496,'Cadmium red')]
-    zarosian_materials = [(37104,'Zarosian insignia'), (49510,'Imperial steel'), (49506,'Ancient vis'), (49512,'Tyrian purple'), (49508,'Blood of Orcus')]
-    misc_materials = [(1607, 'Sapphire'), (1605, 'Emerald'), (1603, 'Ruby'), (1601, 'Diamond'), (1615, 'Dragonstone'), (8792, 'Clockwork'), (954, 'Rope'),
-                      (4621, 'Phoenix feather'), (25487, 'Weapon poison (3)'), (4622, 'Black mushroom ink'), (1775, 'Molten glass'), (560, 'Death rune'),
-                      (2349, 'Bronze bar'), (2355, 'Silver bar'), (36, 'White candle')]
+    tutorial_materials = [(49444, "Imperial iron"), (49445, "Purpleheart wood")]
+    agnostic_materials = [
+        (49460, "Third Age iron"),
+        (49456, "Samite silk"),
+        (49464, "White oak"),
+        (49450, "Goldrune"),
+        (49454, "Orthenglass"),
+        (49462, "Vellum"),
+        (49452, "Leather scraps"),
+        (49446, "Animal furs"),
+        (49448, "Fossilised bone"),
+        (49458, "Soapstone"),
+    ]
+    armadylean_materials = [
+        (49472, "Stormguard steel"),
+        (49474, "Wings of War"),
+        (49468, "Armadylean yellow"),
+        (49466, "Aetherium alloy"),
+        (49470, "Quintessence"),
+    ]
+    bandosian_materials = [
+        (49476, "Malachite green"),
+        (49478, "Mark of the Kyzaj"),
+        (49480, "Vulcanised rubber"),
+        (49482, "Warforged bronze"),
+        (49484, "Yu'biusk clay"),
+    ]
+    dragonkin_materials = [
+        (50688, "Compass rose"),
+        (50692, "Felt"),
+        (50690, "Dragon metal"),
+        (50686, "Carbon black"),
+        (50694, "Orgone"),
+    ]
+    saradominist_materials = [
+        (49490, "Keramos"),
+        (49494, "White marble"),
+        (49486, "Cobalt blue"),
+        (49488, "Everlight silvthril"),
+        (49492, "Star of Saradomin"),
+    ]
+    zamorakian_materials = [
+        (49498, "Chaotic brimstone"),
+        (49500, "Demonhide"),
+        (49502, "Eye of Dagon"),
+        (49504, "Hellfire metal"),
+        (49496, "Cadmium red"),
+    ]
+    zarosian_materials = [
+        (37104, "Zarosian insignia"),
+        (49510, "Imperial steel"),
+        (49506, "Ancient vis"),
+        (49512, "Tyrian purple"),
+        (49508, "Blood of Orcus"),
+    ]
+    misc_materials = [
+        (1607, "Sapphire"),
+        (1605, "Emerald"),
+        (1603, "Ruby"),
+        (1601, "Diamond"),
+        (1615, "Dragonstone"),
+        (8792, "Clockwork"),
+        (954, "Rope"),
+        (4621, "Phoenix feather"),
+        (25487, "Weapon poison (3)"),
+        (4622, "Black mushroom ink"),
+        (1775, "Molten glass"),
+        (560, "Death rune"),
+        (2349, "Bronze bar"),
+        (2355, "Silver bar"),
+        (36, "White candle"),
+    ]
 
     materials = [
-            [Material(id=id, name=name, alignment='Agnostic') for id,name in tutorial_materials]
-            + [Material(id=id, name=name, alignment='Agnostic') for id,name in agnostic_materials]
-            + [Material(id=id, name=name, alignment='Armadylean') for id,name in armadylean_materials]
-            + [Material(id=id, name=name, alignment='Bandosian') for id,name in bandosian_materials]
-            + [Material(id=id, name=name, alignment='Dragonkin') for id,name in dragonkin_materials]
-            + [Material(id=id, name=name, alignment='Saradominist') for id,name in saradominist_materials]
-            + [Material(id=id, name=name, alignment='Zamorakian') for id,name in zamorakian_materials]
-            + [Material(id=id, name=name, alignment='Zarosian') for id,name in zarosian_materials]
-            + [Material(id=id, name=name, alignment='Agnostic') for id,name in misc_materials]
+        [
+            Material(id=id, name=name, alignment="Agnostic")
+            for id, name in tutorial_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Agnostic")
+            for id, name in agnostic_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Armadylean")
+            for id, name in armadylean_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Bandosian")
+            for id, name in bandosian_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Dragonkin")
+            for id, name in dragonkin_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Saradominist")
+            for id, name in saradominist_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Zamorakian")
+            for id, name in zamorakian_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Zarosian")
+            for id, name in zarosian_materials
+        ]
+        + [
+            Material(id=id, name=name, alignment="Agnostic")
+            for id, name in misc_materials
+        ]
     ][0]
 
 # collectors
 if False:
     collector_ids = {
-        'Art Critic Jacques': 5930,
-        'Chief Tess': 7088,
-        'General Bentnoze': 27541,
-        'General Wartface': 27542,
-        'Isaura': 26920,
-        'Lowse': 26921,
-        'Sharrigan': 19098,
-        'Sir Atcha': 26922,
-        'Soran, Emissary of Zaros': 21102,
-        'Velucia': 26924,
-        'Wise Old Man': 8409,
-        'Giles': 26406
+        "Art Critic Jacques": 5930,
+        "Chief Tess": 7088,
+        "General Bentnoze": 27541,
+        "General Wartface": 27542,
+        "Isaura": 26920,
+        "Lowse": 26921,
+        "Sharrigan": 19098,
+        "Sir Atcha": 26922,
+        "Soran, Emissary of Zaros": 21102,
+        "Velucia": 26924,
+        "Wise Old Man": 8409,
+        "Giles": 26406,
     }
     collector_names = [
-        'Art Critic Jacques',
-        'Chief Tess',
-        'General Bentnoze',
-        'General Wartface',
-        'Isaura',
-        'Lowse',
-        'Sharrigan',
-        'Sir Atcha',
-        'Soran, Emissary of Zaros',
-        'Velucia',
-        'Wise Old Man',
-        'Giles'
+        "Art Critic Jacques",
+        "Chief Tess",
+        "General Bentnoze",
+        "General Wartface",
+        "Isaura",
+        "Lowse",
+        "Sharrigan",
+        "Sir Atcha",
+        "Soran, Emissary of Zaros",
+        "Velucia",
+        "Wise Old Man",
+        "Giles",
     ]
-    collectors = [Collector(id=collector_ids.get(name), name=name) for name in collector_names]
+    collectors = [
+        Collector(id=collector_ids.get(name), name=name) for name in collector_names
+    ]
 
 # collections
 if False:
     collections = []
 
-    names = ['Anarchic Abstraction', 'Radiant Renaissance', 'Imperial Impressionism']
-    [collections.append(Collection(name=name, collector_id=collector_ids.get('Art Critic Jacques'))) for name in names]
+    names = ["Anarchic Abstraction", "Radiant Renaissance", "Imperial Impressionism"]
+    [
+        collections.append(
+            Collection(name=name, collector_id=collector_ids.get("Art Critic Jacques"))
+        )
+        for name in names
+    ]
 
-    names = ['Blingy Fings', 'Smoky Fings', 'Hitty Fings', 'Showy Fings']
-    [collections.append(Collection(name=name, collector_id=collector_ids.get('Chief Tess'))) for name in names]
+    names = ["Blingy Fings", "Smoky Fings", "Hitty Fings", "Showy Fings"]
+    [
+        collections.append(
+            Collection(name=name, collector_id=collector_ids.get("Chief Tess"))
+        )
+        for name in names
+    ]
 
-    for collector,name in [ ('General Bentnoze', 'Red Rum Relics'),
-                            ('General Wartface', 'Green Gobbo Goodies'),
-                            ('Lowse', 'Armadylean'),
-                            ('Velucia', 'Museum - Bandosian'),
-                            ('Velucia', 'Museum - Armadylean')]:
-        [collections.append(Collection(name=f'{name} {num}',collector_id=collector_ids.get(collector))) for num in ['I','II','III']]
+    for collector, name in [
+        ("General Bentnoze", "Red Rum Relics"),
+        ("General Wartface", "Green Gobbo Goodies"),
+        ("Lowse", "Armadylean"),
+        ("Velucia", "Museum - Bandosian"),
+        ("Velucia", "Museum - Armadylean"),
+    ]:
+        [
+            collections.append(
+                Collection(
+                    name=f"{name} {num}", collector_id=collector_ids.get(collector)
+                )
+            )
+            for num in ["I", "II", "III"]
+        ]
 
-    for collector,name in [ ('Isaura', 'Zamorakian'),
-                            ('Sharrigan', 'Dragonkin'),
-                            ('Sir Atcha', 'Saradominist'),
-                            ('Soran, Emissary of Zaros', 'Zarosian')]:
-        [collections.append(Collection(name=f'{name} {num}',collector_id=collector_ids.get(collector))) for num in ['I','II','III','IV']]
-        [collections.append(Collection(name=f'Museum - {name} {num}',collector_id=collector_ids.get('Velucia'))) for num in ['I','II','III','IV']]
-        
-    names = ['Wise Am the Music Man', 'Hat Problem', 'Hat Hoarder', 'Magic Man', 'Knowledge is Power']
-    [collections.append(Collection(name=name, collector_id=collector_ids.get('Wise Old Man'))) for name in names]
-    
+    for collector, name in [
+        ("Isaura", "Zamorakian"),
+        ("Sharrigan", "Dragonkin"),
+        ("Sir Atcha", "Saradominist"),
+        ("Soran, Emissary of Zaros", "Zarosian"),
+    ]:
+        [
+            collections.append(
+                Collection(
+                    name=f"{name} {num}", collector_id=collector_ids.get(collector)
+                )
+            )
+            for num in ["I", "II", "III", "IV"]
+        ]
+        [
+            collections.append(
+                Collection(
+                    name=f"Museum - {name} {num}",
+                    collector_id=collector_ids.get("Velucia"),
+                )
+            )
+            for num in ["I", "II", "III", "IV"]
+        ]
+
+    names = [
+        "Wise Am the Music Man",
+        "Hat Problem",
+        "Hat Hoarder",
+        "Magic Man",
+        "Knowledge is Power",
+    ]
+    [
+        collections.append(
+            Collection(name=name, collector_id=collector_ids.get("Wise Old Man"))
+        )
+        for name in names
+    ]
+
     # collection_levels = {
     #     'Anarchic Abstraction': 89,
     #     'Armadylean I': 81,
@@ -343,11 +479,11 @@ if True:
         "Funerary urn of blood",
         "'The Serpent's Fall' carving",
         "Model Chariot",
-        "Funerary urn of miasma"
+        "Funerary urn of miasma",
     ]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     session = Session()
     # session.add_all(materials)
     # session.add_all(collectors)

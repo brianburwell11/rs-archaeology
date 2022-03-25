@@ -4,12 +4,12 @@ from sqlalchemy.orm import relationship, backref
 from . import Base
 
 
-MATERIAL = 'material'
-ARTEFACT = 'artefact'
-COLLECTOR = 'collector'
-COLLECTION = 'collection'
-REWARD = 'reward'
-MYSTERY = 'mystery'
+MATERIAL = "material"
+ARTEFACT = "artefact"
+COLLECTOR = "collector"
+COLLECTION = "collection"
+REWARD = "reward"
+MYSTERY = "mystery"
 
 TABLE_NAMES = [MATERIAL, ARTEFACT, COLLECTOR, COLLECTION, REWARD, MYSTERY]
 
@@ -17,41 +17,42 @@ TABLE_NAMES = [MATERIAL, ARTEFACT, COLLECTOR, COLLECTION, REWARD, MYSTERY]
 
 material_artefact = Table(
     # materials that are needed in order to restore an artefact
-    f'{MATERIAL}_{ARTEFACT}',
+    f"{MATERIAL}_{ARTEFACT}",
     Base.metadata,
-    Column('material_id', Integer, ForeignKey(f'{MATERIAL}.id')),
-    Column('artefact_id', Integer, ForeignKey(f'{ARTEFACT}.id')),
-    Column('amount', Integer)
+    Column("material_id", Integer, ForeignKey(f"{MATERIAL}.id")),
+    Column("artefact_id", Integer, ForeignKey(f"{ARTEFACT}.id")),
+    Column("amount", Integer),
 )
 
 artefact_collection_reward = Table(
     # reward for adding an artefact to a collection
-    f'{ARTEFACT}_{COLLECTION}',
+    f"{ARTEFACT}_{COLLECTION}",
     Base.metadata,
-    Column('artefact_id', Integer, ForeignKey(f'{ARTEFACT}.id')),
-    Column('collection_id', Integer, ForeignKey(f'{COLLECTION}.id')),
-    Column('reward_id', Integer, ForeignKey(f'{REWARD}.id')),
-    Column('amount', Integer)
+    Column("artefact_id", Integer, ForeignKey(f"{ARTEFACT}.id")),
+    Column("collection_id", Integer, ForeignKey(f"{COLLECTION}.id")),
+    Column("reward_id", Integer, ForeignKey(f"{REWARD}.id")),
+    Column("amount", Integer),
 )
 
 artefact_mystery = Table(
     # artefacts that are needed in order to complete a mystery
-    f'{ARTEFACT}_{MYSTERY}',
+    f"{ARTEFACT}_{MYSTERY}",
     Base.metadata,
-    Column('artefact_id', Integer, ForeignKey(f'{ARTEFACT}.id')),
-    Column('mystery_id', Integer, ForeignKey(f'{MYSTERY}.id'))
+    Column("artefact_id", Integer, ForeignKey(f"{ARTEFACT}.id")),
+    Column("mystery_id", Integer, ForeignKey(f"{MYSTERY}.id")),
 )
 
 reward_collection = Table(
     # reward for completing a collection
-    f'{REWARD}_{COLLECTION}',
+    f"{REWARD}_{COLLECTION}",
     Base.metadata,
-    Column('reward_id', Integer, ForeignKey(f'{REWARD}.id')),
-    Column('collection_id', Integer, ForeignKey(f'{COLLECTION}.id')),
-    Column('amount', Integer)
+    Column("reward_id", Integer, ForeignKey(f"{REWARD}.id")),
+    Column("collection_id", Integer, ForeignKey(f"{COLLECTION}.id")),
+    Column("amount", Integer),
 )
 
 # ----------------------------- #
+
 
 class Material(Base):
     """A skilling resource that can be used to repair artefacts.
@@ -66,7 +67,7 @@ class Material(Base):
         What kind of artefacts this material is used to restore.
     artefacts : relationship
         All of the `Artefact`s that require this material to restore.
-            
+
     Notes
     -----
     Tetracompass Piece is considered both a `Material` and a `Reward`
@@ -79,11 +80,12 @@ class Material(Base):
     alignment = Column(String)
 
     artefacts = relationship(
-        'Artefact', secondary=material_artefact, back_populates='materials'
+        "Artefact", secondary=material_artefact, back_populates="materials"
     )
 
     def __repr__(self):
         return f'<Material: id={self.id} name="{self.name}">'
+
 
 class Artefact(Base):
     """An item that can be restored and added to a collection.
@@ -116,18 +118,19 @@ class Artefact(Base):
     xp = Column(Float)
 
     materials = relationship(
-        'Material', secondary=material_artefact, backref=backref(ARTEFACT)
-        )
+        "Material", secondary=material_artefact, backref=backref(ARTEFACT)
+    )
     rewards = relationship(
-        'Reward', secondary=artefact_collection_reward, backref=backref(ARTEFACT)
-        )
+        "Reward", secondary=artefact_collection_reward, backref=backref(ARTEFACT)
+    )
 
     def __repr__(self):
         return f'<Artefact: id={self.id} name="{self.name}">'
-        
+
+
 class Collector(Base):
     """A NPC that collects artefacts in exchange for rewards.
-    
+
     Parameters
     ----------
     id : Integer
@@ -143,10 +146,11 @@ class Collector(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
-    collections = relationship('Collection', backref=backref(COLLECTOR))
+    collections = relationship("Collection", backref=backref(COLLECTOR))
 
     def __repr__(self):
         return f'<Collector: id={self.id} name="{self.id}">'
+
 
 class Collection(Base):
     """A set of artefacts that can be turned in to a collector.
@@ -161,7 +165,7 @@ class Collection(Base):
         The `id` of the NPC `Collector`.
     alignment : {'Agnostic','Armadylean','Bandosian','Dragonkin','Saradominist','Zamorakian','Zarosian'}
         What kind of artefacts this material is used to restore.
-    
+
     artefacts : relationship
         All of the `Artefact`s in the collection.
     """
@@ -170,17 +174,18 @@ class Collection(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
-    collector_id = Column(Integer, ForeignKey(f'{COLLECTOR}.id'))
+    collector_id = Column(Integer, ForeignKey(f"{COLLECTOR}.id"))
 
     artefacts = relationship(
-        'Artefact', secondary=artefact_collection_reward, backref=backref(COLLECTION)
-        )
+        "Artefact", secondary=artefact_collection_reward, backref=backref(COLLECTION)
+    )
     rewards = relationship(
-        'Reward', secondary=artefact_collection_reward, backref=backref(COLLECTION)
-        )
+        "Reward", secondary=artefact_collection_reward, backref=backref(COLLECTION)
+    )
 
     def __repr__(self):
         return f'<Collection: "{self.id}" "{self.collector.id}" {self.level_required}>'
+
 
 class Reward(Base):
     """An item received for adding to or completing a collection.
@@ -197,30 +202,31 @@ class Reward(Base):
     collections : relationship
         All of the `Collection`s that will yield this reward when
         completed.
-        
+
     Notes
     -----
     Tetracompass Piece is considered both a `Reward` and a `Material`.
     """
-    
+
     __tablename__ = REWARD
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
     artefacts = relationship(
-        'Artefact', secondary=artefact_collection_reward, back_populates='rewards'
+        "Artefact", secondary=artefact_collection_reward, back_populates="rewards"
     )
     collections = relationship(
-        'Collection', secondary=artefact_collection_reward, back_populates='rewards'
+        "Collection", secondary=artefact_collection_reward, back_populates="rewards"
     )
 
     def __repr__(self):
         return f'<Reward: id={self.id} name="{self.name}">'
 
+
 class Mystery(Base):
     """An Archaeology mini-quest that may require artefacts to complete.
-    
+
     id : Integer
         A unique identifier for the mystery (autogenerated)
     name : String
@@ -241,8 +247,8 @@ class Mystery(Base):
     alignment = Column(String)
 
     artefacts = relationship(
-        'Artefact', secondary=artefact_mystery, backref=backref(MYSTERY)
-        )
+        "Artefact", secondary=artefact_mystery, backref=backref(MYSTERY)
+    )
 
     def __repr__(self):
         return f'<Mystery: id={self.id} name="{self.name}">'

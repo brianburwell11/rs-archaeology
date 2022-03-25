@@ -1,0 +1,20 @@
+{% extends "_base.html" %} 
+<!--  -->
+{% block head %} 
+
+<title>{{artefact.name}}</title>
+{% endblock %} 
+<!--  -->
+{% block body %} 
+<h2>{{artefact.name}}</h2>
+<img src="{{artefact.img}}">
+<p><strong>ID:</strong> <em>{{artefact.id}}</em></p>
+<p><strong>Alignment:</strong> {{artefact.alignment}}</p>
+<p><strong>Level: </strong> {{artefact.levelRequired}}</p>
+<p><strong>XP: </strong> {{"{:,.1f}".format(artefact.xp)}}</p>
+<p><strong>Materials: </strong></p>
+{% for material in artefact.materials.keys() %} 
+    {% set material = artefact.materials[material] %} 
+    <em>{{material.amount}}</em> {{material.name}} <a href="https://google.com"><img src="{{material.img}}"></a>
+{% endfor %} 
+{% endblock %} 
